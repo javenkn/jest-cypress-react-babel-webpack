@@ -3,20 +3,12 @@ import {buildUser} from '../support/generate'
 describe('login', () => {
   it('should login an existing user', () => {
     const user = buildUser()
-
+    cy.request({
+      method: 'POST',
+      url: 'http://localhost:3000/register',
+      body: user,
+    })
     cy.visit('/')
-      .findByText(/register/i)
-      .click()
-      .findByLabelText(/username/i)
-      .type(user.username)
-      .findByLabelText(/password/i)
-      .type(user.password)
-      .findByText(/submit/i)
-      .click()
-      .findByText(/logout/i)
-      .click()
-
-      // after registering a new user login tests can start
       .findByText(/login/i)
       .click()
       .findByLabelText(/username/i)
